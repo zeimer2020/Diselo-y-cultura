@@ -1,68 +1,33 @@
-# A mi ritmo — Why Bother?
+# A mi ritmo — dos maneras de hacer una bebida
 
-Obra interactiva de simulación computacional para Diseño y Cultura. Desarrollada desde cero a partir de los dos textos personales aportados: ir solo a una discoteca, la mezcla de nervios y curiosidad, y una bebida de limón, un toque dulce, agua con gas y hielo cuyo sabor cambia durante la noche.
+Juego web sobre Why Bother: recibir una bebida automática o dedicar tiempo a crear una propia en una discoteca.
 
-## La idea
+## Jugar
+- Izquierda: la máquina prepara y despacha un vaso cada siete segundos. El botón Obtener bebida automática entrega una bebida y suma una recepción.
+- Derecha: arrastra las botellas de licor, limón, granadina y soda sobre el vaso vacío. Mantenerlas encima vierte más medidas.
+- Arrastra la pala para añadir hielo (máximo cuatro cubos). Mueve la cuchara dentro del vaso para mezclar las capas.
+- Puedes servir tu mezcla y empezar otra, o vaciar el vaso. No hay puntuación competitiva ni tiempo límite.
+- Sonido opcional, pausa y alternativa de teclado: Tab selecciona herramientas; Enter las usa.
 
-**¿Para qué tomarte el trabajo de quedarte cuando todavía no te sientes parte del lugar?**
+## Ejecutar
+Requiere Node.js. Sin dependencias externas ni instalación de paquetes.
 
-La obra propone una respuesta abierta: para darte tiempo de encontrar una forma propia de estar. El vaso es un pequeño espacio personal dentro de una discoteca sugerida. No hay puntuaciones, objetivos de consumo ni una interacción obligatoria. La bebida no contiene alcohol.
+    npm run dev
 
-La experiencia tiene tres momentos, derivados del deshielo: llegar sin conocer a nadie, descubrir que no hace falta seguir a nadie y notar que cambió tu manera de habitar el lugar. No son niveles que debas superar. Puedes quedarte quieto, pausar o empezar otra vez.
+Vista local: http://127.0.0.1:5180/
 
-## Ejecutar en VS Code
+    npm test
+    npm run build
 
-Abre esta carpeta en VS Code. Necesitas Node.js (probado con Node 22).
+La compilación se guarda en dist. GitHub Pages también puede servir index.html y src desde la raíz.
 
-```powershell
-npm.cmd run dev
-```
+## Código activo
+- src/game.js: ciclo automático, ingredientes, mezcla, hielo, entregas y reglas.
+- src/renderer.js: vasos, máquina, cinta de entrega, capas y luces en Canvas.
+- src/main.js: arrastre con puntero/táctil, mezcla, teclado, sonido y pausa.
+- src/audio.js: síntesis de audio local.
+- src/styles.css e index.html: mesa, herramientas SVG y diseño adaptable.
+- tests/game.test.js: repetición del ciclo, capacidad, hielo, mezcla y entrega.
 
-Abre http://127.0.0.1:5180/. No hace falta instalar dependencias: el proyecto usa módulos JavaScript, Canvas 2D y Web Audio nativos. No abras index.html mediante file:// porque el navegador restringe módulos locales.
-
-- `npm.cmd test`: pruebas de simulación.
-- `npm.cmd run build`: copia una versión estática a dist/.
-- `npm.cmd run preview`: sirve dist/ en el puerto 5180. Detén antes dev con Ctrl+C.
-
-## Interacciones
-
-1. Pulsa **Entrar a mi ritmo**.
-2. Arrastra el vaso para inclinarlo y desplazar el hielo. Las flechas izquierda y derecha ofrecen una alternativa de teclado cuando el foco no está en un botón.
-3. Pulsa **Marca tu pulso**, toca el vaso sin arrastrar o usa Espacio con el foco en el escenario.
-4. Activa **Respira un momento** para disminuir la agitación y el fondo sonoro.
-5. También puedes no hacer nada: el tiempo derrite el hielo y cambia el color, el movimiento y las frases.
-6. El sonido empieza apagado. **Sonido** activa un ambiente grave suave, pulsaciones y choques sintetizados del hielo. **Pausar** congela la simulación y silencia el ambiente. Al cambiar de pestaña o abrir La obra también se suspende.
-
-## Qué se simula
-
-- Integración temporal con pasos fijos a 120 Hz.
-- Inercia de la inclinación del vaso, amortiguación y fuerzas sobre seis cuerpos de hielo.
-- Flotación simplificada, colisiones entre cuerpos y límites del recipiente.
-- Disminución gradual del tamaño del hielo; el movimiento acelera un poco el deshielo.
-- Burbujas que ascienden con distintas velocidades y se regeneran en el fondo.
-- Un estado de agitación y adaptación que modifica el entorno visual y sonoro.
-
-Es un modelo expresivo, no un simulador termodinámico ni una medida psicológica. El deshielo se completa aproximadamente en 100 segundos de tiempo activo sin agitación. La preferencia de movimiento reducido elimina el balanceo visual y el movimiento automático del fondo.
-
-## Archivos
-
-| Archivo | Responsabilidad |
-| --- | --- |
-| index.html | Estructura, controles accesibles y texto de la obra |
-| src/main.js | Ciclo de animación y coordinación |
-| src/config.js | Frases, límites y utilidades |
-| src/simulation.js | Cuerpos, fuerzas, colisiones, burbujas y deshielo |
-| src/renderer.js | Ilustración del vaso, hielo, limón, luces y siluetas con Canvas |
-| src/gestures.js | Ratón, táctil, teclado y cancelación de gestos |
-| src/audio.js | Ambiente y notas sintetizadas, sin archivos musicales |
-| src/ui.js | Estados de controles, capítulos, pausa y diálogo |
-| src/styles.css | Diseño visual y adaptación a pantallas pequeñas |
-| scripts/serve.mjs | Servidor local sin dependencias |
-| scripts/build.mjs | Preparación de dist/ |
-| tests/simulation.test.js | Cinco pruebas de estabilidad y comportamiento |
-
-## Verificación
-
-Cinco pruebas aprobadas: cambio sin interacción, deshielo por agitación, estabilidad y límites del hielo, respiración/reinicio y rechazo de tiempos inválidos. Composición revisada en escritorio 1365×900 y móvil 390×844. Entrada, sonido opcional, pulsación, arrastre, pausa, respiración y diálogo comprobados en navegador sin errores de consola detectados. La apreciación del volumen y timbre requiere escucharlos en el equipo de presentación.
-
-No hay analítica, peticiones externas, fuentes remotas, grabaciones ni recursos con dependencia de conexión. No se modificó el proyecto anterior ni se publicaron cambios en GitHub.
+Los módulos anteriores de simulación permanecen en el repositorio, pero la entrada actual utiliza game.js.
+La obra representa un cóctel alcohólico como parte de una noche de fiesta; las cantidades del juego son expresivas, no una receta real.
